@@ -16,11 +16,7 @@ import {
 } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
-import dataProvider, {
-  GraphQLClient,
-  liveProvider,
-} from "@refinedev/nestjs-query";
-import { createClient } from "graphql-ws";
+import { dataProvider, liveProvider } from "./providers";
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import routerBindings, {
@@ -30,12 +26,6 @@ import routerBindings, {
   DocumentTitleHandler,
 } from "@refinedev/react-router-v6";
 
-const API_URL = "https://api.nestjs-query.refine.dev/graphql";
-const WS_URL = "wss://api.nestjs-query.refine.dev/graphql";
-
-const gqlClient = new GraphQLClient(API_URL);
-const wsClient = createClient({ url: WS_URL });
-
 function App() {
   return (
     <BrowserRouter>
@@ -44,8 +34,8 @@ function App() {
         <AntdApp>
           <DevtoolsProvider>
             <Refine
-              //   dataProvider={dataProvider(gqlClient)}
-              //   liveProvider={liveProvider(wsClient)}
+              dataProvider={dataProvider}
+              liveProvider={liveProvider}
               notificationProvider={useNotificationProvider}
               routerProvider={routerBindings}
               // authProvider={}
